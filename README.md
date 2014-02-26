@@ -61,6 +61,17 @@ notes
         streamfeed
         river
         fold
+        vane
+        digress
+        wave
+        nami (japanese wave)
+        Kantai (armadda in japanese)
+        Xiàn (thread, chinese)
+        Cháo (japanese for nest, but also, hey, lots of stuff)
+        chao is now working title
+        hmmm no maybe wave?
+        
+
 
 
     features
