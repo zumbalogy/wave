@@ -46,4 +46,7 @@ end
 
 
 gem 'devise'
-gem 'faye'
+gem 'thin'
+gem "thin-rails"
+#gem 'faye'
+gem 'faye-rails'
