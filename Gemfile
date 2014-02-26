@@ -46,5 +46,4 @@ end
 
 
 gem 'devise'
-gem 'eventmachine'
-gem 'juggernaut'
+gem 'faye'
