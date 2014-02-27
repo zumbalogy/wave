@@ -1,12 +1,33 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-    <%= javascript_include_tag 'http://localhost:9292/faye.js' %>
-    <script type="text/javascript">
-    </script>
-</head>
-<body>
-    <p>this is the index</p>
+
+
+
+<p>this is the index</p>
+
+<input id='input' type='text'></input>
+<button id='submit'>submit</button>
+
+<ul id="chat">
+</ul>
+
+<%= form_for Message.new, :remote => true do |f| %>
+  <%= f.text_field :content %>
+  <%= f.submit "Send" %>
+<% end %>
+
+
 </body>
-</html>
+<script type="text/javascript">
+    var faye = new Faye.Client('http://localhost:9292/faye');
+    $('#submit').on('click', function(){
+        faye.publish('/messages/new', {data: 'Hi there'});
+        // $.ajax({
+        //     url: "http://localhost:9292/faye",
+        //     type: "POST",
+        //     data: { 
+        //         message: {"channel":"/messages/new", "data":"hello bob"}
+        //     }
+        // })
+        return false
+    })
+
+</script>
