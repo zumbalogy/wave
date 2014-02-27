@@ -4,7 +4,13 @@
     <title></title>
     <%= javascript_include_tag 'http://localhost:9292/faye.js' %>
     <script type="text/javascript">
-    console.log(new Faye.Client("http://localhost:9292/faye"))
+    var foo = new Faye.Client("http://localhost:9292/faye")
+    foo.subscribe('/messages/new', function(data){
+        console.log(data)
+    })
+    console.log(foo.subscribe('/messages/new', function(data){
+        console.log(data)
+    }))
     </script>
 </head>
 <body>

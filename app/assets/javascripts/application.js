@@ -19,7 +19,7 @@
 $(function(){
     var faye = new Faye.Client("http://localhost:9292/faye")
     // the below changes if you have multiple rooms
-    faye.subscribe('/messages/new', function(message){
-        alert(message)
+    faye.subscribe('/messages/new', function(data){
+        console.log(data)
     })
 })
