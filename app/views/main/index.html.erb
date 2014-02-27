@@ -1,1 +1,13 @@
-this is the test
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <%= javascript_include_tag 'http://localhost:9292/faye.js' %>
+    <script type="text/javascript">
+    console.log(new Faye.Client("http://localhost:9292/faye"))
+    </script>
+</head>
+<body>
+
+</body>
+</html>
