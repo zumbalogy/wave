@@ -45,9 +45,12 @@ end
 # gem 'debugger', group: [:development, :test]
 
 
-gem 'devise'
 gem 'thin'
 gem "thin-rails"
 #gem 'faye'
 gem 'faye-rails'
 # gem 'private_pub'
+
+
+gem 'devise'
+gem "rails-backbone"
