@@ -51,7 +51,8 @@ gem "thin-rails"
 gem 'faye-rails'
 # gem 'private_pub'
 
-
+gem 'pry'
+gem 'pry-nav'
 gem 'devise'
 gem "rails-backbone"
 gem 'underscore-rails'

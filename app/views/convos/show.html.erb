@@ -1,1 +1,29 @@
-this is the convo show
+<p>convo number <%= @convo.id %></p>
+
+<h3>Chat</h3>
+<ul id="chat"></ul>
+
+<form data-remote='true' id='footer'>
+    <input id='input' autocomplete="off" type='text' placeholder=' message...'></input>
+    <button class='message' id='submit'></button>
+</form>
+
+
+<script type="text/javascript">
+    var faye = new Faye.Client('http://localhost:9292/faye');
+    faye.subscribe('/faye/<%= @convo.id %>', function(data){
+        console.log(data)
+        var li = $(document.createElement('li'))
+        li.text(data.user.split('@')[0] + ':   ' + data.data)
+        $('#chat').append(li)
+        pos = li.position().top - 200
+        console.log(pos)
+        window.scroll(0,pos);
+    })
+    $('.message#submit').on('click', function(){
+        faye.publish('/faye/<%= @convo.id %>', {data: $('#input').val(), user: "<%= current_user.email  %>"});
+        $('#input').val('')
+        return false
+    })
+
+</script>
