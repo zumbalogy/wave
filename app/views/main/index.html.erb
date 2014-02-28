@@ -1,11 +1,10 @@
 <p> hello <%= (current_user.email if current_user) || 'guest' %> </p>
 
 <h3>Chat</h3>
-<ul id="chat">
-</ul>
+<ul id="chat"></ul>
 
 <form data-remote='true' id='footer'>
-    <input id='input' type='text'></input>
+    <input id='input' type='text' placeholder='message...'></input>
     <button id='submit'></button>
 </form>
 
