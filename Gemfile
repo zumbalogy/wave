@@ -54,3 +54,4 @@ gem 'faye-rails'
 
 gem 'devise'
 gem "rails-backbone"
+gem 'underscore-rails'

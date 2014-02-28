@@ -1,6 +1,8 @@
 class ConvosController < ApplicationController
 
     def new
+        convo = Convo.new
+        
     end
 
     def show

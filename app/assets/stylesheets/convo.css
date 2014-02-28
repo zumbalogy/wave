@@ -28,3 +28,20 @@ html {
 ul {
     list-style-type: none;
 }
+
+input {
+    background-color: #eee;
+}
+
+input::-webkit-input-placeholder {
+    color:  #599;
+}
+
+input:focus::-webkit-input-placeholder {
+    color:  #cee;
+}
+
+input:focus {
+    background-color: #cee;
+    outline: none;
+}

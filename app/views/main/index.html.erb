@@ -1,11 +1,15 @@
 <p> hello <%= (current_user.email if current_user) || 'guest' %> </p>
 
+
+<a href="/convos/new"><button>new convo</button></a>
+
+
 <h3>Chat</h3>
 <ul id="chat"></ul>
 
 <form data-remote='true' id='footer'>
     <input id='input' type='text' placeholder=' message...'></input>
-    <button id='submit'></button>
+    <button class='message' id='submit'></button>
 </form>
 
 
@@ -17,7 +21,7 @@
         li.text(data.user.split('@')[0] + ':   ' + data.data)
         $('#chat').append(li)
     })
-    $('#submit').on('click', function(){
+    $('.message#submit').on('click', function(){
         faye.publish('/messages/new', {data: $('#input').val(), user: "<%= current_user.email  %>"});
         $('#input').val('')
         return false
