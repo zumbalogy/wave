@@ -1,27 +1,26 @@
-<p>
-    hello <%= current_user.email %>
-</p>
+<p> hello <%= (current_user.email if current_user) || 'guest' %> </p>
 
-<form data-remote='true'>
-    <input id='input' type='text'></input>
-    <button id='submit'>submit</button>
-</form>
-
+<h3>Chat</h3>
 <ul id="chat">
-    this is a test
 </ul>
 
-</body>
+<form data-remote='true' id='footer'>
+    <input id='input' type='text'></input>
+    <button id='submit'></button>
+</form>
+
+
 <script type="text/javascript">
     var faye = new Faye.Client('http://localhost:9292/faye');
     faye.subscribe('/messages/new', function(data){
         console.log(data)
-        var li = $(document.createElement('li'));
-        li.text(data.data);
+        var li = $(document.createElement('li'))
+        li.text(data.user.split('@')[0] + ':   ' + data.data)
         $('#chat').append(li)
     })
     $('#submit').on('click', function(){
-        faye.publish('/messages/new', {data: $('#input').val()});
+        faye.publish('/messages/new', {data: $('#input').val(), user: "<%= current_user.email  %>"});
+        $('#input').val('')
         return false
     })
 
