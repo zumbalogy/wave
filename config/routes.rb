@@ -1,5 +1,6 @@
 Final::Application.routes.draw do
 
+  get "chats/room"
   root 'main#index'
   devise_for :users
   resources :messages
