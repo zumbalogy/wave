@@ -5,28 +5,33 @@
 
 <ul>
     <% current_user.convos.each do |convo| %>
+        <div>
         <a href="/convos/<%= convo.id %>">
             convo with <%= convo.users.map{|u| u.email}.to_s.gsub(/["\[\]]/,'') %>
         </a>
         <input type='text' placeholder='add email'></input>
-        <button convoid="<%= convo.id %>" id='submit'>enter</button>
+        <button class='submit' convoid="<%= convo.id %>" id='submit'>enter</button>
+        <br>
+        </div>
     <% end %>
 </ul>
 
 <script type="text/javascript">
-    $('#submit').on('click', function(){
+    $('.submit').on('click', function(){
         var self = this;
-        console.log(self)
-        console.log(self.getAttribute('convoid'))
+        var inputz = $(self).siblings()
+        console.log(inputz)
+        inputz = $(inputz[inputz.length - 2 ])
+        console.log(inputz)
         $.ajax({
             method: 'post',
             url: 'convos/add',
             data: {
-                email: $('input').val(),
+                email: inputz.val(),
                 convo: self.getAttribute('convoid')
             }
         })
-        $('input').val('')
+        inputz.val('')
         return false
     })
 </script>
