@@ -9,10 +9,13 @@
             <a href="/convos/<%= convo.id %>">
                 convo with <%= convo.users.map{|u| u.email}.to_s.gsub(/["\[\]]/,'') %>
             </a>
-            <%= form_tag("/convos/add", :method => "post") do %>
+            <%= form_tag('/convos/add', method: 'post') do %>
                 <%= text_field_tag(:email) %>
                  <input name="convo" type="hidden" value="<%= convo.id %>"/>
                 <%= submit_tag("add email") %>
+            <% end %>
+            <%= form_tag("/convos/" + convo.id.to_s, method: 'delete' ) do %>
+                <%= submit_tag("delete") %>
             <% end %>
             <br>
         </div>

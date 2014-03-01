@@ -28,8 +28,9 @@ class ConvosController < ApplicationController
     end
 
     def destroy
-        puts params
-        render nothing: true
+        convo = Convo.find(params[:id])
+        convo.delete
+        redirect_to '/'
     end
 
     def add
