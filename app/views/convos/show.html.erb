@@ -1,3 +1,4 @@
+<% if @convo.users.include?(current_user) %>
 <p>convo number <%= @convo.id %></p>
 
 <h3>Chat</h3>
@@ -28,3 +29,4 @@
         return false
     })
 </script>
+<% end %>
