@@ -1,5 +1,3 @@
-require 'eventmachine'
-
 class ConvosController < ApplicationController
 
     def new
@@ -12,15 +10,6 @@ class ConvosController < ApplicationController
 
     def show
         convo = Convo.find(params[:id])
-
-        # EM.run do
-        #     client = Faye::Client.new('http://localhost:9292/faye')
-        #     client.subscribe('/convo/' + convo.id.to_s) do |message|
-        #         puts message.inspect
-        #     end
-        #     client.publish('/convo/' + convo.id.to_s, 'text' => 'Hello world')
-        # end
-
         @convo = convo
     end
 
