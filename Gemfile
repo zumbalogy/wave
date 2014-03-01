@@ -52,8 +52,12 @@ gem 'faye-rails'
 # gem 'private_pub'
 gem 'eventmachine'
 
-gem 'pry'
-gem 'pry-nav'
 gem 'devise'
 gem "rails-backbone"
 gem 'underscore-rails'
+
+
+group :development do
+    gem 'pry'
+    gem 'pry-nav'
+end
