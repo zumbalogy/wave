@@ -24,7 +24,16 @@
             {
                 data: $('#input').val(),
                 user: "<%= current_user.email  %>"
-        });
+            }
+        );
+        $.ajax({
+            url: '',
+            method: 'post',
+            data: {
+                $('#input').val(),
+                user: "<%= current_user.email  %>"
+            }
+        })
         $('#input').val('')
         return false
     })
