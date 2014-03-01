@@ -2,6 +2,7 @@ Final::Application.routes.draw do
 
   get "chats/room"
   root 'main#index'
+  post '/convos/add' => 'convos#add'
   devise_for :users
   resources :messages
   resources :convos

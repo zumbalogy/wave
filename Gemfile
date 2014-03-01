@@ -50,6 +50,7 @@ gem "thin-rails"
 #gem 'faye'
 gem 'faye-rails'
 # gem 'private_pub'
+gem 'eventmachine'
 
 gem 'pry'
 gem 'pry-nav'

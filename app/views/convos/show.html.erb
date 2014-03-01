@@ -16,14 +16,15 @@
         var li = $(document.createElement('li'))
         li.text(data.user.split('@')[0] + ':   ' + data.data)
         $('#chat').append(li)
-        pos = li.position().top - 200
-        console.log(pos)
-        window.scroll(0,pos);
+        window.scroll(0, li.offset().top);
     })
     $('.message#submit').on('click', function(){
-        faye.publish('/faye/<%= @convo.id %>', {data: $('#input').val(), user: "<%= current_user.email  %>"});
+        faye.publish('/faye/<%= @convo.id %>', 
+            {
+                data: $('#input').val(),
+                user: "<%= current_user.email  %>"
+        });
         $('#input').val('')
         return false
     })
-
 </script>

@@ -49,3 +49,7 @@ input:focus {
 ul  {
     padding-bottom: 3em;
 }
+
+a {
+    color: white;
+}

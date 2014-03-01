@@ -3,28 +3,30 @@
 
 <a href="/convos/new"><button>new convo</button></a>
 
-
-<h3>Chat</h3>
-<ul id="chat"></ul>
-
-<form data-remote='true' id='footer'>
-    <input id='input' autocomplete="off" type='text' placeholder=' message...'></input>
-    <button class='message' id='submit'></button>
-</form>
-
+<ul>
+    <% current_user.convos.each do |convo| %>
+        <a href="/convos/<%= convo.id %>">
+            convo with <%= convo.users.map{|u| u.email}.to_s.gsub(/["\[\]]/,'') %>
+        </a>
+        <input type='text' placeholder='add email'></input>
+        <button convoid="<%= convo.id %>" id='submit'>enter</button>
+    <% end %>
+</ul>
 
 <script type="text/javascript">
-    var faye = new Faye.Client('http://localhost:9292/faye');
-    faye.subscribe('/messages/new', function(data){
-        console.log(data)
-        var li = $(document.createElement('li'))
-        li.text(data.user.split('@')[0] + ':   ' + data.data)
-        $('#chat').append(li)
-    })
-    $('.message#submit').on('click', function(){
-        faye.publish('/messages/new', {data: $('#input').val(), user: "<%= current_user.email  %>"});
-        $('#input').val('')
+    $('#submit').on('click', function(){
+        var self = this;
+        console.log(self)
+        console.log(self.getAttribute('convoid'))
+        $.ajax({
+            method: 'post',
+            url: 'convos/add',
+            data: {
+                email: $('input').val(),
+                convo: self.getAttribute('convoid')
+            }
+        })
+        $('input').val('')
         return false
     })
-
 </script>
