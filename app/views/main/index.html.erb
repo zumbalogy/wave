@@ -6,32 +6,19 @@
 <ul>
     <% current_user.convos.each do |convo| %>
         <div>
-        <a href="/convos/<%= convo.id %>">
-            convo with <%= convo.users.map{|u| u.email}.to_s.gsub(/["\[\]]/,'') %>
-        </a>
-        <input type='text' placeholder='add email'></input>
-        <button class='submit' convoid="<%= convo.id %>" id='submit'>enter</button>
-        <br>
+            <a href="/convos/<%= convo.id %>">
+                convo with <%= convo.users.map{|u| u.email}.to_s.gsub(/["\[\]]/,'') %>
+            </a>
+            <%= form_tag("/convos/add", :method => "post") do %>
+                <%= text_field_tag(:email) %>
+                 <input name="convo" type="hidden" value="<%= convo.id %>"/>
+                <%= submit_tag("add email") %>
+            <% end %>
+            <br>
         </div>
     <% end %>
 </ul>
 
 <script type="text/javascript">
-    $('.submit').on('click', function(){
-        var self = this;
-        var inputz = $(self).siblings()
-        console.log(inputz)
-        inputz = $(inputz[inputz.length - 2 ])
-        console.log(inputz)
-        $.ajax({
-            method: 'post',
-            url: 'convos/add',
-            data: {
-                email: inputz.val(),
-                convo: self.getAttribute('convoid')
-            }
-        })
-        inputz.val('')
-        return false
-    })
+
 </script>

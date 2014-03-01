@@ -6,7 +6,8 @@ class ConvosController < ApplicationController
         convo = Convo.new
         convo.users << current_user
         convo.save
-        redirect_to '/convos/' + convo.id.to_s
+        #redirect_to '/convos/' + convo.id.to_s
+        redirect_to '/' 
     end
 
     def show
@@ -26,7 +27,9 @@ class ConvosController < ApplicationController
     def update
     end
 
-    def delete
+    def destroy
+        puts params
+        render nothing: true
     end
 
     def add
@@ -37,6 +40,6 @@ class ConvosController < ApplicationController
         else
             raise 'error, dont add them'
         end
-        render nothing: true
+        redirect_to '/'
     end
 end
