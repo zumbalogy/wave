@@ -9,7 +9,6 @@
     <button class='message' id='submit'></button>
 </form>
 
-
 <script type="text/javascript">
     var faye = new Faye.Client('http://localhost:9292/faye');
     faye.subscribe('/faye/<%= @convo.id %>', function(data){
@@ -36,4 +35,17 @@
         return false
     })
 </script>
+
+<% @convo.messages.each do |message| %>
+    <script>
+        console.log("<%= message.content %>")
+        var li = $(document.createElement('li'))
+        li.text("<%=message.user.email%>".split('@')[0] + ':   ' + "<%= message.content %>")
+        $('#chat').append(li)
+        window.scroll(0, li.offset().top);
+    </script>
 <% end %>
+
+
+<% end %>
+
