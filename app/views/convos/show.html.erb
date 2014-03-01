@@ -20,19 +20,17 @@
         window.scroll(0, li.offset().top);
     })
     $('.message#submit').on('click', function(){
-        faye.publish('/faye/<%= @convo.id %>', 
-            {
-                data: $('#input').val(),
-                user: "<%= current_user.email  %>"
-            }
-        );
+        var info = {
+            data: $('#input').val(),
+            user: "<%= current_user.email  %>"
+        }
+        faye.publish('/faye/<%= @convo.id %>', info);
+        info.user = "<%= current_user.id %>";
+        info.convo = "<%= @convo.id %>";
         $.ajax({
-            url: '',
+            url: '/carriers',
             method: 'post',
-            data: {
-                $('#input').val(),
-                user: "<%= current_user.email  %>"
-            }
+            data: info
         })
         $('#input').val('')
         return false

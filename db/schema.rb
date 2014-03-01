@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 20140228173411) do
   enable_extension "plpgsql"
 
   create_table "carriers", force: true do |t|
+    t.integer  "user_id"
     t.integer  "convo_id"
     t.integer  "parent_carrier_id"
     t.datetime "created_at"

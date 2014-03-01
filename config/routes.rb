@@ -1,5 +1,6 @@
 Final::Application.routes.draw do
 
+  get "carriers/create"
   get "chats/room"
   root 'main#index'
   post '/convos/add' => 'convos#add'
