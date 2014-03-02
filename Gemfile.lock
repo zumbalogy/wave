@@ -100,6 +100,7 @@ GEM
     pry-nav (0.2.3)
       pry (~> 0.9.10)
     rack (1.5.2)
+    rack-cors (0.2.9)
     rack-ssl-enforcer (0.2.6)
     rack-test (0.6.2)
       rack (>= 1.0)
@@ -185,6 +186,7 @@ DEPENDENCIES
   pg
   pry
   pry-nav
+  rack-cors
   rack-ssl-enforcer
   rails (= 4.0.2)
   rails-backbone
