@@ -85,4 +85,10 @@ notes
         have threads
 
 
+#- show.html.erb
+
+var faye = new Faye.Client("https://wavvefaye.herokuapp.com/faye");
+//("https://3a971351.ngrok.com/faye");
+//("https://localhost:9292/faye") 
+//'<%= ENV["FAYE_VAR"] %>');
 

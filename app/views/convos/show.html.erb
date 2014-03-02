@@ -10,44 +10,49 @@
 </form>
 
 <script type="text/javascript">
-    var faye = new Faye.Client("https://wavvefaye.herokuapp.com/faye") 
-    //("https://3a971351.ngrok.com/faye");
-    //("https://localhost:9292/faye") 
-    //'<%= ENV["FAYE_VAR"] %>');
-    faye.subscribe('/faye/<%= @convo.id %>', function(data){
-        console.log(data)
-        var li = $(document.createElement('li'))
-        li.text(data.user.split('@')[0] + ':   ' + data.data)
-        $('#chat').append(li)
-        window.scroll(0, li.offset().top);
-    })
-    $('.message#submit').on('click', function(){
-        var info = {
-            data: $('#input').val(),
-            user: "<%= current_user.email  %>"
-        }
-        faye.publish('/faye/<%= @convo.id %>', info);
-        info.user = "<%= current_user.id %>";
-        info.convo = "<%= @convo.id %>";
-        $.ajax({
-            url: '/carriers',
-            method: 'post',
-            data: info
-        })
-        $('#input').val('')
-        return false
-    })
-</script>
+////////////////////////////////////////////////////////////////////////////////////////
+
+
+var faye = new Faye.Client("https://wavvefaye.herokuapp.com/faye");
+
+function render_carrier(input){
+
+}
+
+faye.subscribe('/faye/<%= @convo.id %>', function(data){
+    console.log(data);
+    var li = $(document.createElement('li'));
+    li.text(data.email.split('@')[0] + ':   ' + data.data);
+    $('#chat').append(li);
+    window.scroll(0, li.offset().top);
+});
+
+$('.message#submit').on('click', function(){
+    var info = {
+        data: $('#input').val(),
+        email: "<%= current_user.email  %>",
+        user: "<%= current_user.id %>",
+        convo: "<%= @convo.id %>"
+    };
+    faye.publish('/faye/<%= @convo.id %>', info);
+    $.ajax({
+        url: '/carriers',
+        method: 'post',
+        data: info
+    });
+    $('#input').val('');
+    return false
+});
 
 <% @convo.messages.each do |message| %>
-    <script>
-        var li = $(document.createElement('li'))
-        li.text("<%=message.user.email%>".split('@')[0] + ':   ' + "<%= message.content %>")
-        $('#chat').append(li)
-        window.scroll(0, li.offset().top);
-    </script>
+    var li = $(document.createElement('li'));
+    li.text("<%= message.user.email %>".split('@')[0] + ':   ' + "<%= message.content %>");
+    $('#chat').append(li);
+    window.scroll(0, li.offset().top);
 <% end %>
 
 
+
+</script>
 <% end %>
 
