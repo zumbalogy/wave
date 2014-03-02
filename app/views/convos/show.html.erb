@@ -10,7 +10,10 @@
 </form>
 
 <script type="text/javascript">
-    var faye = new Faye.Client("https://localhost:9292/faye") //'<%= ENV["FAYE_VAR"] %>');
+    var faye = new Faye.Client("https://3a971351.ngrok.com/faye") 
+    //("https://3a971351.ngrok.com/faye");
+    //("https://localhost:9292/faye") 
+    //'<%= ENV["FAYE_VAR"] %>');
     faye.subscribe('/faye/<%= @convo.id %>', function(data){
         console.log(data)
         var li = $(document.createElement('li'))
