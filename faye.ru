@@ -1,5 +1,5 @@
 require 'faye'
-
+require 'rack/ssl-enforcer'
 
 
 Faye::WebSocket.load_adapter('thin') 

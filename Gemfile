@@ -56,6 +56,8 @@ gem 'devise'
 gem "rails-backbone"
 gem 'underscore-rails'
 
+gem 'rack-ssl-enforcer', :require => 'rack/ssl-enforcer'
+
 
 group :development do
     gem 'pry'
