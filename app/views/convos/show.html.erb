@@ -41,7 +41,6 @@
 
 <% @convo.messages.each do |message| %>
     <script>
-        console.log("<%= message.content %>")
         var li = $(document.createElement('li'))
         li.text("<%=message.user.email%>".split('@')[0] + ':   ' + "<%= message.content %>")
         $('#chat').append(li)
