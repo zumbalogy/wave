@@ -1,14 +1,15 @@
 Final::Application.routes.draw do
 
-  get "carriers/create"
-  get "chats/room"
   root 'main#index'
   post '/convos/add' => 'convos#add'
+
+  get "/carriers/create" => 'carriers#create'
+  post '/carriers/fetch' => 'carriers#fetch'
+
   resources :messages
   resources :carriers
   resources :convos
   devise_for :users
-
 
 end
 

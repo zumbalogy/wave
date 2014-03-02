@@ -1,4 +1,5 @@
 class CarriersController < ApplicationController
+
     def create
         carrier = Carrier.new
         carrier.convo = Convo.find(params[:convo])
@@ -11,4 +12,15 @@ class CarriersController < ApplicationController
         message.user = User.find(params[:user])
         message.save
     end
+
+    def fetch
+        # probably want to have this render carriers with messages inside them
+        carriers = Convo.find(params[:convo]).carriers
+        output = {}
+
+        
+
+        render json: output
+    end
+
 end

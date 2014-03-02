@@ -16,15 +16,15 @@
 var faye = new Faye.Client("https://wavvefaye.herokuapp.com/faye");
 
 function render_carrier(input){
-
+    console.log(input);
+    var li = $(document.createElement('li'));
+    li.text(input.email.split('@')[0] + ':   ' + input.data);
+    $('#chat').append(li);
+    window.scroll(0, li.offset().top);
 }
 
 faye.subscribe('/faye/<%= @convo.id %>', function(data){
-    console.log(data);
-    var li = $(document.createElement('li'));
-    li.text(data.email.split('@')[0] + ':   ' + data.data);
-    $('#chat').append(li);
-    window.scroll(0, li.offset().top);
+    render_carrier(data)
 });
 
 $('.message#submit').on('click', function(){
