@@ -58,6 +58,7 @@ gem 'underscore-rails'
 
 gem 'rack-ssl-enforcer', :require => 'rack/ssl-enforcer'
 
+gem 'rails_12factor', group: :production
 
 group :development do
     gem 'pry'
