@@ -21,6 +21,7 @@ function render_carrier(input){
     li.text(input.email.split('@')[0] + ':   ' + input.data);
     $('#chat').append(li);
     window.scroll(0, li.offset().top);
+    // if current user === the user of the message/convo, should color via class
 }
 
 faye.subscribe('/faye/<%= @convo.id %>', function(data){

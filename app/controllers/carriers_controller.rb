@@ -16,11 +16,17 @@ class CarriersController < ApplicationController
     def fetch
         # probably want to have this render carriers with messages inside them
         carriers = Convo.find(params[:convo]).carriers
-        output = {}
+        fleet = []
 
-        
-
-        render json: output
+        carriers.to_a.each do |carrier|
+            escort_carrier = {
+                messages: carrier.messages,
+                email: User.find(carrier.user_id).email,
+                parent: carrier.parent_carrier_id
+            }
+            fleet << escort_carrier
+        end
+        render json: fleet
     end
 
 end
