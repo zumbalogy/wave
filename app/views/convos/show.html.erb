@@ -18,7 +18,7 @@ var faye = new Faye.Client("https://wavvefaye.herokuapp.com/faye");
 function render_carrier(input){
     console.log(input);
     var li = $(document.createElement('li'));
-    li.text(input.email.split('@')[0] + ':   ' + input.data);
+    li.text(input.email.split('@')[0] + ':   ' + input.messages.pop().content);
     $('#chat').append(li);
     window.scroll(0, li.offset().top);
     // if current user === the user of the message/convo, should color via class
@@ -30,7 +30,7 @@ faye.subscribe('/faye/<%= @convo.id %>', function(data){
 
 $('.message#submit').on('click', function(){
     var info = {
-        data: $('#input').val(),
+        messages: [{content: $('#input').val()}],
         email: "<%= current_user.email  %>",
         user: "<%= current_user.id %>",
         convo: "<%= @convo.id %>"
@@ -45,13 +45,26 @@ $('.message#submit').on('click', function(){
     return false
 });
 
-<% @convo.messages.each do |message| %>
-    var li = $(document.createElement('li'));
-    li.text("<%= message.user.email %>".split('@')[0] + ':   ' + "<%= message.content %>");
-    $('#chat').append(li);
-    window.scroll(0, li.offset().top);
-<% end %>
+// <% @convo.messages.each do |message| %>
+//     var li = $(document.createElement('li'));
+//     li.text("<%= message.user.email %>".split('@')[0] + ':   ' + "<%= message.content %>");
+//     $('#chat').append(li);
+//     window.scroll(0, li.offset().top);
+// <% end %>
 
+
+$.ajax({
+    url: '/carriers/fetch',
+    method: 'post',
+    data: {
+        convo: "<%= @convo.id %>"
+    },
+    success: function(data){
+        for (var i = 0; i < data.length; i++){
+            render_carrier(data[i])
+        }
+    }
+})
 
 
 </script>
