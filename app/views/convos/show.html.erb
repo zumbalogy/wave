@@ -13,29 +13,39 @@
 
 var convoid = "<%= @convo.id %>";
 
-// function render_carrier(input){
-//     var li = $(document.createElement('li'));
-//     li.text(input.email.split('@')[0] + ':   ' + input.messages[input.messages.length -1].content);
-//     $('#chat').append(li);
-//     window.scroll(0, li.offset().top);
-// }
 
 function render_carrier(input){
-    var big_div   = $(document.createElement('div'));
+    var big_div = $(document.createElement('div'));
     var small_div = $(document.createElement('div'));
     big_div.addClass('big_div');
     small_div.addClass('small_div');
-    var content   = input.messages[input.messages.length -1].content;
-    var time      = jQuery.format.prettyDate(input.time);
-    var email     = input.email;
+
+    var content = input.messages[input.messages.length -1].content;
+    var pretty_time = $.format.prettyDate(input.time);
+    var email = input.email;
     if (email === "<%= current_user.email %>"){
         email = 'me'
     } else {
         email = email.split('@')[0]
     };
 
+    var email_div = $(document.createElement('div'));
+    email_div.addClass('email_div');
+    email_div.text(email);
+    email_div.attr('full_email', input.email);
 
-    small_div.text(email + ' : ' + content + ' - ' + time);
+    var time_div = $(document.createElement('div'));
+    time_div.addClass('time_div');
+    time_div.text(pretty_time);
+    time_div.attr('full_time', input.time);
+
+    var content_p = $(document.createElement('p'));
+    content_p.addClass('content_p');
+    content_p.text(content);
+    small_div.append(email_div);
+    small_div.append(time_div);
+    small_div.append(content_p);
+
 
     big_div.append(small_div);
     

@@ -92,3 +92,10 @@ var faye = new Faye.Client("https://wavvefaye.herokuapp.com/faye");
 //("https://localhost:9292/faye") 
 //'<%= ENV["FAYE_VAR"] %>');
 
+
+give each elem that have the time an attr of real timestamp,
+write method that goes over all of those and updates the pretty time
+call that method every time you 1)load page, 2) are hit with a new from your subscribtion
+3) 20 seconds
+
+
