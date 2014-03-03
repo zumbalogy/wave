@@ -13,6 +13,16 @@
 
 var convoid = "<%= @convo.id %>";
 
+function render_time(){
+    var time_array = $('.time_div');
+    for (var i = 0; i < time_array.length; i++){
+        var clock = $(time_array[i]);
+        var clock_time = clock.attr('full_time')
+        var pretty = $.format.prettyDate(clock_time)
+        clock.text(pretty)
+    }
+};
+
 
 function render_carrier(input){
     var big_div = $(document.createElement('div'));
@@ -70,7 +80,8 @@ $.ajax({
 var faye = new Faye.Client("https://wavvefaye.herokuapp.com/faye");
 
 faye.subscribe('/faye/' + convoid, function(data){
-    render_carrier(data)
+    render_carrier(data);
+    render_time();
 });
 
 $('.message#submit').on('click', function(){
@@ -80,7 +91,7 @@ $('.message#submit').on('click', function(){
         email: "<%= current_user.email  %>",
         user: "<%= current_user.id %>",
         convo: convoid,
-        time: new Date().getTime()
+        time: (new Date).toISOString()
     };
     faye.publish('/faye/' + convoid, info);
     $.ajax({
@@ -92,6 +103,8 @@ $('.message#submit').on('click', function(){
     return false
 });
 
+
+setInterval(function(){render_time()}, 29000)
 
 </script>
 <% end %>
