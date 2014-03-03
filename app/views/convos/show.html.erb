@@ -1,7 +1,6 @@
 <% if @convo.users.include?(current_user) %>
-<p>convo number <%= @convo.id %></p>
+<h4>convo with <%= @convo.users.map{|u| u.email}.to_s.gsub(/[\"\[\]]/, '') %></h4>
 
-<h3>Chat</h3>
 <ul id="chat"></ul>
 
 <form data-remote='true' id='footer'>
@@ -57,16 +56,6 @@ $('.message#submit').on('click', function(){
     $('#input').val('');
     return false
 });
-
-// <% @convo.messages.each do |message| %>
-//     var li = $(document.createElement('li'));
-//     li.text("<%= message.user.email %>".split('@')[0] + ':   ' + "<%= message.content %>");
-//     $('#chat').append(li);
-//     window.scroll(0, li.offset().top);
-// <% end %>
-
-
-
 
 
 </script>
