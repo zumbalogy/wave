@@ -11,6 +11,8 @@
 <script type="text/javascript">
 ////////////////////////////////////////////////////////////////////////////////////////
 
+var convoid = "<%= @convo.id %>";
+
 function render_carrier(input){
     var li = $(document.createElement('li'));
     li.text(input.email.split('@')[0] + ':   ' + input.messages[input.messages.length -1].content);
@@ -19,12 +21,22 @@ function render_carrier(input){
     // if current user === the user of the message/convo, should color via class
 }
 
+function render_carrier2(input){
+    var big_div = $(document.createElement('div'));
+    var small_div = $(document.createElement('div'));
+    var content = input.messages[input.messages.length -1].content;
+    var time = 
+
+
+    big_div.addClass('big_div');
+    small_div.addClass('small_div');
+       
+}
+
 $.ajax({
     url: '/carriers/fetch',
     method: 'post',
-    data: {
-        convo: "<%= @convo.id %>"
-    },
+    data: {convo: convoid},
     success: function(data){
         console.log(data)
         for (var i = 0; i < data.length; i++){
@@ -35,7 +47,7 @@ $.ajax({
 
 var faye = new Faye.Client("https://wavvefaye.herokuapp.com/faye");
 
-faye.subscribe('/faye/<%= @convo.id %>', function(data){
+faye.subscribe('/faye/' + convoid, function(data){
     render_carrier(data)
 });
 
@@ -45,9 +57,9 @@ $('.message#submit').on('click', function(){
         messages: [{content: $('#input').val()}],
         email: "<%= current_user.email  %>",
         user: "<%= current_user.id %>",
-        convo: "<%= @convo.id %>"
+        convo: convoid
     };
-    faye.publish('/faye/<%= @convo.id %>', info);
+    faye.publish('/faye/' + convoid, info);
     $.ajax({
         url: '/carriers',
         method: 'post',

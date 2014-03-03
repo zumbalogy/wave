@@ -21,7 +21,8 @@ class CarriersController < ApplicationController
             escort_carrier = {
                 messages: carrier.messages,
                 email: User.find(carrier.user_id).email,
-                parent: carrier.parent_carrier_id
+                parent: carrier.parent_carrier_id,
+                time: carrier.updated_at
             }
             fleet << escort_carrier
         end

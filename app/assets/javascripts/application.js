@@ -13,6 +13,9 @@
 //= require jquery
 //= require jquery_ujs
 
+//= require date.js
+
+
 //= require underscore
 //= require backbone
 //= require backbone_rails_sync
