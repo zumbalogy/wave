@@ -54,11 +54,37 @@ a {
     color: white;
 }
 
-li {
-    font-size: 1.3em;
-}
 
 h4 {
     color: lightblue;
     font-family: sans-serif;
+}
+
+
+.big_div {
+    background-color:black;
+}
+
+.small_div {
+    background-color: #ecc;
+    width: 50%;
+}
+
+p {
+    color: black;
+}
+
+.time_div {
+    color: grey;
+    float: right;
+    display: inline;
+}
+
+.email_div {
+    color: grey;
+    display: inline;
+}
+
+.mine {
+    background-color: #cee;
 }

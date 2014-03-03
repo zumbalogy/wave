@@ -24,7 +24,8 @@ function render_carrier(input){
     var pretty_time = $.format.prettyDate(input.time);
     var email = input.email;
     if (email === "<%= current_user.email %>"){
-        email = 'me'
+        email = 'me';
+        small_div.addClass('mine')
     } else {
         email = email.split('@')[0]
     };
