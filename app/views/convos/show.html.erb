@@ -85,21 +85,23 @@ faye.subscribe('/faye/' + convoid, function(data){
 });
 
 $('.message#submit').on('click', function(){
-    var info = {
-        // parent carier : this.sibling or something
-        messages: [{content: $('#input').val()}],
-        email: "<%= current_user.email  %>",
-        user: "<%= current_user.id %>",
-        convo: convoid,
-        time: (new Date).toISOString()
-    };
-    faye.publish('/faye/' + convoid, info);
-    $.ajax({
-        url: '/carriers',
-        method: 'post',
-        data: info
-    });
-    $('#input').val('');
+    if ($('#input').val() != ''){
+        var info = {
+            // parent carier : this.sibling or something
+            messages: [{content: $('#input').val()}],
+            email: "<%= current_user.email  %>",
+            user: "<%= current_user.id %>",
+            convo: convoid,
+            time: (new Date).toISOString()
+        };
+        faye.publish('/faye/' + convoid, info);
+        $.ajax({
+            url: '/carriers',
+            method: 'post',
+            data: info
+        });
+        $('#input').val('');
+    }
     return false
 });
 
