@@ -23,6 +23,20 @@ function render_carrier(input){
     // if current user === the user of the message/convo, should color via class
 }
 
+$.ajax({
+    url: '/carriers/fetch',
+    method: 'post',
+    data: {
+        convo: "<%= @convo.id %>"
+    },
+    success: function(data){
+        console.log(data)
+        for (var i = 0; i < data.length; i++){
+            render_carrier(data[i])
+        }
+    }
+})
+
 faye.subscribe('/faye/<%= @convo.id %>', function(data){
     render_carrier(data)
 });
@@ -52,19 +66,7 @@ $('.message#submit').on('click', function(){
 // <% end %>
 
 
-$.ajax({
-    url: '/carriers/fetch',
-    method: 'post',
-    data: {
-        convo: "<%= @convo.id %>"
-    },
-    success: function(data){
-        console.log(data)
-        for (var i = 0; i < data.length; i++){
-            render_carrier(data[i])
-        }
-    }
-})
+
 
 
 </script>
