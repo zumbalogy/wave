@@ -12,9 +12,6 @@
 <script type="text/javascript">
 ////////////////////////////////////////////////////////////////////////////////////////
 
-
-var faye = new Faye.Client("https://wavvefaye.herokuapp.com/faye");
-
 function render_carrier(input){
     var li = $(document.createElement('li'));
     li.text(input.email.split('@')[0] + ':   ' + input.messages[input.messages.length -1].content);
@@ -37,12 +34,15 @@ $.ajax({
     }
 })
 
+var faye = new Faye.Client("https://wavvefaye.herokuapp.com/faye");
+
 faye.subscribe('/faye/<%= @convo.id %>', function(data){
     render_carrier(data)
 });
 
 $('.message#submit').on('click', function(){
     var info = {
+        // parent carier : this.sibling or something
         messages: [{content: $('#input').val()}],
         email: "<%= current_user.email  %>",
         user: "<%= current_user.id %>",

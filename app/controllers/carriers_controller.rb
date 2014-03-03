@@ -7,14 +7,13 @@ class CarriersController < ApplicationController
         carrier.save
 
         message = Message.new
-        message.content = params[:data]
+        message.content = params[:messages]['0']['content']
         message.carrier = carrier
         message.user = User.find(params[:user])
         message.save
     end
 
     def fetch
-        # probably want to have this render carriers with messages inside them
         carriers = Convo.find(params[:convo]).carriers
         fleet = []
 
@@ -26,6 +25,7 @@ class CarriersController < ApplicationController
             }
             fleet << escort_carrier
         end
+
         render json: fleet
     end
 
