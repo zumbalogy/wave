@@ -13,24 +13,35 @@
 
 var convoid = "<%= @convo.id %>";
 
+// function render_carrier(input){
+//     var li = $(document.createElement('li'));
+//     li.text(input.email.split('@')[0] + ':   ' + input.messages[input.messages.length -1].content);
+//     $('#chat').append(li);
+//     window.scroll(0, li.offset().top);
+// }
+
 function render_carrier(input){
-    var li = $(document.createElement('li'));
-    li.text(input.email.split('@')[0] + ':   ' + input.messages[input.messages.length -1].content);
-    $('#chat').append(li);
-    window.scroll(0, li.offset().top);
-    // if current user === the user of the message/convo, should color via class
-}
-
-function render_carrier2(input){
-    var big_div = $(document.createElement('div'));
+    var big_div   = $(document.createElement('div'));
     var small_div = $(document.createElement('div'));
-    var content = input.messages[input.messages.length -1].content;
-    var time = 
-
-
     big_div.addClass('big_div');
     small_div.addClass('small_div');
-       
+    var content   = input.messages[input.messages.length -1].content;
+    var time      = jQuery.format.prettyDate(input.time);
+    var email     = input.email;
+    if (email === "<%= current_user.email %>"){
+        email = 'me'
+    } else {
+        email = email.split('@')[0]
+    };
+
+
+    small_div.text(email + ' : ' + content + ' - ' + time);
+
+    big_div.append(small_div);
+    
+
+    $('#chat').append(big_div); //in future this will be to whatever parent div
+    window.scroll(0, big_div.offset().top);
 }
 
 $.ajax({
@@ -57,7 +68,8 @@ $('.message#submit').on('click', function(){
         messages: [{content: $('#input').val()}],
         email: "<%= current_user.email  %>",
         user: "<%= current_user.id %>",
-        convo: convoid
+        convo: convoid,
+        time: new Date().getTime()
     };
     faye.publish('/faye/' + convoid, info);
     $.ajax({
