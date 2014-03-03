@@ -16,9 +16,8 @@
 var faye = new Faye.Client("https://wavvefaye.herokuapp.com/faye");
 
 function render_carrier(input){
-    console.log(input);
     var li = $(document.createElement('li'));
-    li.text(input.email.split('@')[0] + ':   ' + input.messages.pop().content);
+    li.text(input.email.split('@')[0] + ':   ' + input.messages[input.messages.length -1].content);
     $('#chat').append(li);
     window.scroll(0, li.offset().top);
     // if current user === the user of the message/convo, should color via class
@@ -60,6 +59,7 @@ $.ajax({
         convo: "<%= @convo.id %>"
     },
     success: function(data){
+        console.log(data)
         for (var i = 0; i < data.length; i++){
             render_carrier(data[i])
         }
