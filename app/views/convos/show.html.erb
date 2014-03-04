@@ -17,19 +17,19 @@ function render_time(){
     var time_array = $('.time_div');
     for (var i = 0; i < time_array.length; i++){
         var clock = $(time_array[i]);
-        var clock_time = clock.attr('full_time')
-        var pretty = $.format.prettyDate(clock_time)
+        var clock_time = clock.attr('full_time');
+        var pretty = $.format.prettyDate(clock_time);
         clock.text(pretty)
     }
 };
 
 
 function render_carrier(input){
-    console.log(input)
     var big_div = $(document.createElement('div'));
     var small_div = $(document.createElement('div'));
     big_div.addClass('big_div');
     small_div.addClass('small_div');
+    big_div.attr('id', input.carrier_id);
 
     var content = input.messages[input.messages.length -1].content;
     var pretty_time = $.format.prettyDate(input.time);
@@ -61,8 +61,12 @@ function render_carrier(input){
 
     big_div.append(small_div);
     
-
-    $('#chat').append(big_div); //in future this will be to whatever parent div
+    if (input.parent) {
+        $('.big_div#' + input.parent.toString()).append(big_div)
+    } else {
+        $('#chat').append(big_div);
+    };
+    nest_form();
     window.scroll(0, big_div.offset().top);
 }
 
@@ -77,16 +81,17 @@ $.ajax({
     }
 })
 
-var faye = new Faye.Client("https://wavvefaye.herokuapp.com/faye");
+var faye = new Faye.Client("https://wavvefaye.herokuapp.com/faye"); //slash faye again for heroku?
 
 faye.subscribe('/faye/' + convoid, function(data){
     render_carrier(data);
     render_time();
 });
 
-$('.message#submit').on('click', function(){
+$('.message').on('click', function(){
+    // parent == if this.attr has nested class or whatver
     var info = {
-        // parent : this.sibling or something
+        // parent : this.sibling or something (has to be null if not a real one)
         messages: [{content: $('#input').val()}],
         email: "<%= current_user.email  %>",
         user: "<%= current_user.id %>",
@@ -99,7 +104,6 @@ $('.message#submit').on('click', function(){
         data: info,
         success: function(data){
             info['carrier_id'] = data.carrier_id
-            console.log(info)
         }
     });
     faye.publish('/faye/' + convoid, info);
@@ -108,7 +112,38 @@ $('.message#submit').on('click', function(){
 });
 
 
-setInterval(function(){render_time()}, 29000)
+console.log($('.small_div'))
+
+function nest_form(){
+    // remove all previous event listeners on small divs first
+    $('.small_div').on('click', function(){
+        var big_div = $(this).siblings().context.parentElement;
+        var form = $(document.createElement('form'));
+        form.attr('data-remote', true);
+        var input = $(document.createElement('input'));
+        input.attr('type', 'text');
+        input.attr('paceholder', 'message...');
+        input.attr('autocomplete', 'off');
+        input.attr('id', 'input');
+        input.attr('style', 'width:40%;margin-left:10%;');
+        input.attr('autofocus', true);
+        var button = $(document.createElement('button'));
+        button.attr('id', 'submit');
+        button.attr('class', 'message');
+        button.attr('hidden', true);
+
+        $(form).append(input);
+        $(form).append(button);
+        $(big_div).append(form)
+        
+//      <form data-remote='true' id='footer'>
+//          <input id='input' autocomplete="off" type='text' placeholder=' message...'></input>
+//          <button class='message' id='submit'></button>
+//      </form>
+    })
+};
+
+setInterval(function(){render_time()}, 20000)
 
 </script>
 <% end %>

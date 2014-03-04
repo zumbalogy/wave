@@ -22,6 +22,7 @@ class CarriersController < ApplicationController
 
         carriers.to_a.each do |carrier|
             escort_carrier = {
+                carrier_id: carrier.id,
                 messages: carrier.messages,
                 email: User.find(carrier.user_id).email,
                 parent: carrier.parent_carrier_id,
