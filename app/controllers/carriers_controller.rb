@@ -4,7 +4,9 @@ class CarriersController < ApplicationController
         carrier = Carrier.new
         carrier.convo = Convo.find(params[:convo])
         carrier.user = User.find(params[:user])
-        carrier.parent_carrier_id = Carrier.find(params[:parent]) if params[:parent]
+        unless params[:parent] == ''
+            carrier.parent_carrier_id = Carrier.find(params[:parent])
+        end
         carrier.save
 
         message = Message.new

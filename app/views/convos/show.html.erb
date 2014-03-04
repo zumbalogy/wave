@@ -4,7 +4,7 @@
 <ul id="chat"></ul>
 
 <form data-remote='true' id='footer'>
-    <input id='input' autocomplete="off" type='text' placeholder=' message...'></input>
+    <input id='input' autocomplete="off" type='textarea' placeholder=' message...'></input>
     <button class='message' id='submit'></button>
 </form>
 
@@ -25,6 +25,7 @@ function render_time(){
 
 
 function render_carrier(input){
+    console.log(input);
     var big_div = $(document.createElement('div'));
     var small_div = $(document.createElement('div'));
     big_div.addClass('big_div');
@@ -81,65 +82,72 @@ $.ajax({
     }
 })
 
-var faye = new Faye.Client("https://wavvefaye.herokuapp.com/faye"); //slash faye again for heroku?
+var faye = new Faye.Client("https://wavvefaye.herokuapp.com/faye/faye"); //slash faye again for heroku?
 
 faye.subscribe('/faye/' + convoid, function(data){
     render_carrier(data);
     render_time();
 });
 
-$('.message').on('click', function(){
-    // parent == if this.attr has nested class or whatver
-    var info = {
-        // parent : this.sibling or something (has to be null if not a real one)
-        messages: [{content: $('#input').val()}],
-        email: "<%= current_user.email  %>",
-        user: "<%= current_user.id %>",
-        convo: convoid,
-        time: (new Date).toISOString()
-    };
-    $.ajax({
-        url: '/carriers',
-        method: 'post',
-        data: info,
-        success: function(data){
-            info['carrier_id'] = data.carrier_id
+function set_publish(){
+    $('.message').off();
+    $('.message').on('click', function(){
+        var parent_id = null;
+        if ($(this).hasClass('hide')){
+            parent_id = $(this).parent().parent()[0].id;
         }
-    });
-    faye.publish('/faye/' + convoid, info);
-    $('#input').val('');
-    return false
-});
+        console.log(parent_id);
 
+        var info = {
+            parent : parent_id, 
+            messages: [{content: $('#input').val()}],
+            email: "<%= current_user.email  %>",
+            user: "<%= current_user.id %>",
+            convo: convoid,
+            time: (new Date).toISOString()
+        };
+        $.ajax({
+            url: '/carriers',
+            method: 'post',
+            data: info,
+            success: function(data){
+                info['carrier_id'] = data.carrier_id
+            }
+        });
+        faye.publish('/faye/' + convoid, info);
+        $('#input').val('');
+        return false
+    })
+}
 
-console.log($('.small_div'))
+set_publish()
 
 function nest_form(){
-    // remove all previous event listeners on small divs first
+    $('.small_div').off();
     $('.small_div').on('click', function(){
+        // .hide .each if emty val, remove them
         var big_div = $(this).siblings().context.parentElement;
         var form = $(document.createElement('form'));
         form.attr('data-remote', true);
         var input = $(document.createElement('input'));
-        input.attr('type', 'text');
+        input.attr('type', 'textarea');
         input.attr('paceholder', 'message...');
         input.attr('autocomplete', 'off');
         input.attr('id', 'input');
-        input.attr('style', 'width:40%;margin-left:10%;');
+        input.attr('style', 'width:40%;margin-left:10%;margin-bottom:15px;');
         input.attr('autofocus', true);
-        var button = $(document.createElement('button'));
-        button.attr('id', 'submit');
-        button.attr('class', 'message');
-        button.attr('hidden', true);
+        var submit = $(document.createElement('input'));
+        submit.attr('type', 'submit');
+        submit.attr('id', 'submit');
+        submit.attr('class', 'message hide');
+
+// lost focus should kill the form (and val() == '')
 
         $(form).append(input);
-        $(form).append(button);
+        $(form).append(submit);
         $(big_div).append(form)
         
-//      <form data-remote='true' id='footer'>
-//          <input id='input' autocomplete="off" type='text' placeholder=' message...'></input>
-//          <button class='message' id='submit'></button>
-//      </form>
+        set_publish()
     })
 };
 

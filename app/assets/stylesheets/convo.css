@@ -64,7 +64,7 @@ h4 {
 
 
 .big_div {
-
+    padding-left: 80px;
     margin-left: 0px;
 }
 
@@ -95,4 +95,8 @@ p {
 
 .mine {
     background-color: #bdd;
+}
+
+.hide {
+    visibility: hidden;
 }
