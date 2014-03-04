@@ -25,6 +25,7 @@ function render_time(){
 
 
 function render_carrier(input){
+    console.log(input)
     var big_div = $(document.createElement('div'));
     var small_div = $(document.createElement('div'));
     big_div.addClass('big_div');
@@ -70,7 +71,6 @@ $.ajax({
     method: 'post',
     data: {convo: convoid},
     success: function(data){
-        console.log(data)
         for (var i = 0; i < data.length; i++){
             render_carrier(data[i])
         }
@@ -86,19 +86,23 @@ faye.subscribe('/faye/' + convoid, function(data){
 
 $('.message#submit').on('click', function(){
     var info = {
-        // parent carier : this.sibling or something
+        // parent : this.sibling or something
         messages: [{content: $('#input').val()}],
         email: "<%= current_user.email  %>",
         user: "<%= current_user.id %>",
         convo: convoid,
         time: (new Date).toISOString()
     };
-    faye.publish('/faye/' + convoid, info);
     $.ajax({
         url: '/carriers',
         method: 'post',
-        data: info
+        data: info,
+        success: function(data){
+            info['carrier_id'] = data.carrier_id
+            console.log(info)
+        }
     });
+    faye.publish('/faye/' + convoid, info);
     $('#input').val('');
     return false
 });

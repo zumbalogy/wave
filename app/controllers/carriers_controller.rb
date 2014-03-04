@@ -4,6 +4,7 @@ class CarriersController < ApplicationController
         carrier = Carrier.new
         carrier.convo = Convo.find(params[:convo])
         carrier.user = User.find(params[:user])
+        carrier.parent_carrier_id = Carrier.find(params[:parent]) if params[:parent]
         carrier.save
 
         message = Message.new
@@ -11,6 +12,8 @@ class CarriersController < ApplicationController
         message.carrier = carrier
         message.user = User.find(params[:user])
         message.save
+
+        render json: {carrier_id: carrier.id}
     end
 
     def fetch

@@ -62,16 +62,18 @@ h4 {
 
 
 .big_div {
-    background-color:black;
+
+    margin-left: 50px;
 }
 
 .small_div {
     background-color: #ccc;
     width: 50%;
+    margin: 0;
 }
 
 p {
-    color: black;
+    color: black
 }
 
 .time_div {
