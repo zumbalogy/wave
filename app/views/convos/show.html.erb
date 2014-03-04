@@ -29,6 +29,7 @@ function render_carrier(input){
     var small_div = $(document.createElement('div'));
     big_div.addClass('big_div');
     small_div.addClass('small_div');
+    console.log(input.carrier_id);
     big_div.attr('id', input.carrier_id);
 
     var content = input.messages[input.messages.length -1].content;
@@ -94,7 +95,7 @@ function set_publish(){
         var content = $(this).prev().val()
         var parent_id = null;
         if ($(this).hasClass('hide')){
-            parent_id = $(this).parent().parent()[0].id; //these lines ova here funny
+            parent_id = $(this).parent().parent()[0].id;
         }
 
         var info = {
@@ -110,11 +111,11 @@ function set_publish(){
             method: 'post',
             data: info,
             success: function(data){
-                info.carrier_id = data.carrier_id
-                console.log(info)
+                info.carrier_id = data.carrier_id;
+                faye.publish('/faye/' + convoid, info)
             }
         });
-        faye.publish('/faye/' + convoid, info);
+
         $('#input').val('');
         if ($(this).hasClass('hide') == false){
             $('.footer').val('');  
