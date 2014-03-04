@@ -25,6 +25,7 @@ function render_time(){
 
 
 function render_carrier(input){
+    console.log(input)
     var big_div = $(document.createElement('div'));
     var small_div = $(document.createElement('div'));
     big_div.addClass('big_div');
@@ -127,7 +128,6 @@ set_publish()
 function nest_form(){
     $('.small_div').off();
     $('.small_div').on('click', function(){
-        // .hide .each if emty val, remove them
         var big_div = $(this).siblings().context.parentElement;
         var form = $(document.createElement('form'));
         form.attr('data-remote', true);
@@ -144,7 +144,16 @@ function nest_form(){
         submit.attr('class', 'message hide');
 
 // lost focus should kill the form (and val() == '')
-
+        $(form).on('focusout', function(){
+            $(form).remove()
+        })
+        $(form).on('keydown', function(event){
+            setTimeout(function(){
+                if (event.keyCode == 13){
+                    $(form).remove()
+                }
+            }, 25)
+        })
         $(form).append(input);
         $(form).append(submit);
         $(big_div).append(form)

@@ -5,7 +5,7 @@ class CarriersController < ApplicationController
         carrier.convo = Convo.find(params[:convo])
         carrier.user = User.find(params[:user])
         unless params[:parent] == ''
-            carrier.parent_carrier_id = Carrier.find(params[:parent])
+            carrier.parent_carrier_id = Carrier.find(params[:parent]).id
         end
         carrier.save
 
@@ -23,14 +23,13 @@ class CarriersController < ApplicationController
         fleet = []
 
         carriers.to_a.each do |carrier|
-            escort_carrier = {
+            fleet << {
                 carrier_id: carrier.id,
                 messages: carrier.messages,
                 email: User.find(carrier.user_id).email,
                 parent: carrier.parent_carrier_id,
                 time: carrier.updated_at
             }
-            fleet << escort_carrier
         end
         render json: fleet
     end
