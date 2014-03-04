@@ -32,7 +32,6 @@ class CarriersController < ApplicationController
             }
             fleet << escort_carrier
         end
-
         render json: fleet
     end
 

@@ -4,7 +4,7 @@
 <ul id="chat"></ul>
 
 <form data-remote='true' id='footer'>
-    <input id='input' autocomplete="off" type='textarea' placeholder=' message...'></input>
+    <input class='footer' id='input' autocomplete="off" type='textarea' placeholder=' message...'></input>
     <button class='message' id='submit'></button>
 </form>
 
@@ -25,7 +25,6 @@ function render_time(){
 
 
 function render_carrier(input){
-    console.log(input);
     var big_div = $(document.createElement('div'));
     var small_div = $(document.createElement('div'));
     big_div.addClass('big_div');
@@ -82,7 +81,7 @@ $.ajax({
     }
 })
 
-var faye = new Faye.Client("https://wavvefaye.herokuapp.com/faye/faye"); //slash faye again for heroku?
+var faye = new Faye.Client("https://wavvefaye.herokuapp.com/faye/faye");
 
 faye.subscribe('/faye/' + convoid, function(data){
     render_carrier(data);
@@ -92,15 +91,15 @@ faye.subscribe('/faye/' + convoid, function(data){
 function set_publish(){
     $('.message').off();
     $('.message').on('click', function(){
+        var content = $(this).prev().val()
         var parent_id = null;
         if ($(this).hasClass('hide')){
             parent_id = $(this).parent().parent()[0].id;
         }
-        console.log(parent_id);
 
         var info = {
             parent : parent_id, 
-            messages: [{content: $('#input').val()}],
+            messages: [{content: content}],
             email: "<%= current_user.email  %>",
             user: "<%= current_user.id %>",
             convo: convoid,
@@ -116,6 +115,9 @@ function set_publish(){
         });
         faye.publish('/faye/' + convoid, info);
         $('#input').val('');
+        if ($(this).hasClass('hide') == false){
+            $('.footer').val('');  
+        }
         return false
     })
 }
