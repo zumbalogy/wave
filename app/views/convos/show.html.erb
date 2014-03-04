@@ -25,7 +25,6 @@ function render_time(){
 
 
 function render_carrier(input){
-    console.log(input)
     var big_div = $(document.createElement('div'));
     var small_div = $(document.createElement('div'));
     big_div.addClass('big_div');
@@ -95,7 +94,7 @@ function set_publish(){
         var content = $(this).prev().val()
         var parent_id = null;
         if ($(this).hasClass('hide')){
-            parent_id = $(this).parent().parent()[0].id;
+            parent_id = $(this).parent().parent()[0].id; //these lines ova here funny
         }
 
         var info = {
@@ -111,7 +110,8 @@ function set_publish(){
             method: 'post',
             data: info,
             success: function(data){
-                info['carrier_id'] = data.carrier_id
+                info.carrier_id = data.carrier_id
+                console.log(info)
             }
         });
         faye.publish('/faye/' + convoid, info);
