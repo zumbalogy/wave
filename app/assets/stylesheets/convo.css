@@ -2,7 +2,7 @@ body {
     margin: 0;
     padding: 0;
     height: 100%;
-    background-color: #e5e5e5;
+    background-color: #e4e4e4;
     font-family: sans-serif;
 }
 
@@ -33,7 +33,7 @@ ul {
 
 input {
     background-color: #eee;
-    padding-left: 20px;
+    padding-left: 10px;
 }
 
 input::-webkit-input-placeholder {
@@ -54,7 +54,7 @@ ul  {
 }
 
 a {
-    color: white;
+    color: teal;
 }
 
 
@@ -72,7 +72,7 @@ h4 {
 }
 
 .small_div {
-    background-color: #ffffff;
+    background-color: #fdffff;
     width: 50%;
     margin: 0;
     height: 70px;
