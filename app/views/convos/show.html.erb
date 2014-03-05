@@ -68,7 +68,7 @@ function render_carrier(input){
         $('#chat').append(big_div);
     };
     nest_form();
-    window.scroll(0, big_div.offset().top);
+    window.scroll(0, big_div.offset().top - (window.screen.availHeight / 2));
 }
 
 $.ajax({
@@ -158,7 +158,7 @@ function nest_form(){
         $(form).append(input);
         $(form).append(submit);
         $(big_div).append(form)
-        
+        window.scroll(0, form.offset().top - (window.screen.availHeight / 2));
         set_publish()
     })
 };

@@ -2,6 +2,8 @@ body {
     margin: 0;
     padding: 0;
     height: 100%;
+    background-color: #e5e5e5;
+    font-family: sans-serif;
 }
 
 html {
@@ -31,6 +33,7 @@ ul {
 
 input {
     background-color: #eee;
+    padding-left: 20px;
 }
 
 input::-webkit-input-placeholder {
@@ -38,11 +41,11 @@ input::-webkit-input-placeholder {
 }
 
 input:focus::-webkit-input-placeholder {
-    color:  #cee;
+    color:  #aee;
 }
 
 input:focus {
-    background-color: #cee;
+    background-color: #acf0f2;
     outline: none;
 }
 
@@ -56,7 +59,7 @@ a {
 
 
 h4 {
-    color: lightblue;
+    color: #0bc;
     font-family: sans-serif;
     margin: 0;
     padding: 0;
@@ -69,9 +72,12 @@ h4 {
 }
 
 .small_div {
-    background-color: #ccc;
+    background-color: #ffffff;
     width: 50%;
     margin: 0;
+    height: 70px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #ccc;
 }
 
 p {
@@ -83,18 +89,21 @@ p {
 }
 
 .time_div {
-    color: grey;
+    color: rgba(200,200,200,0.7);
     float: right;
     display: inline;
+    padding: 5px;
+    font-size: 10px;
 }
 
 .email_div {
-    color: grey;
+    color: rgba(230,230,230,1);
     display: inline;
+    padding:5px;
 }
 
 .mine {
-    background-color: #bdd;
+    background-color: #7abacc;
 }
 
 .hide {
