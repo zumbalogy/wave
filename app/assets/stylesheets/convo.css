@@ -78,6 +78,7 @@ h4 {
     height: 70px;
     margin-bottom: 15px;
     border-bottom: 1px solid #ccc;
+    border-right: 1px solid #ccc;
     padding: 5px;
 }
 

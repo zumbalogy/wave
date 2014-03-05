@@ -29,7 +29,6 @@ function render_carrier(input){
     var small_div = $(document.createElement('div'));
     big_div.addClass('big_div');
     small_div.addClass('small_div');
-    console.log(input.carrier_id);
     big_div.attr('id', input.carrier_id);
 
     var content = input.messages[input.messages.length -1].content;
@@ -144,11 +143,15 @@ function nest_form(){
         submit.attr('id', 'submit');
         submit.attr('class', 'message hide');
 
-// lost focus should kill the form (and val() == '')
+
         $(form).on('focusout', function(){
-            $(form).remove()
+            var val = $($(form).context[0]).val();
+            if (val == ''){
+                $(form).remove()
+            }
         })
         $(form).on('keydown', function(event){
+            
             setTimeout(function(){
                 if (event.keyCode == 13){
                     $(form).remove()
