@@ -41,11 +41,11 @@ input::-webkit-input-placeholder {
 }
 
 input:focus::-webkit-input-placeholder {
-    color:  #aee;
+    color:  #7abacc;
 }
 
 input:focus {
-    background-color: #acf0f2;
+    background-color: #7abacc;
     outline: none;
 }
 
@@ -78,6 +78,7 @@ h4 {
     height: 70px;
     margin-bottom: 15px;
     border-bottom: 1px solid #ccc;
+    padding: 5px;
 }
 
 p {
@@ -89,21 +90,21 @@ p {
 }
 
 .time_div {
-    color: rgba(200,200,200,0.7);
+    color: #aaa; /*rgba(210,210,210,1);*/
     float: right;
     display: inline;
-    padding: 5px;
+    /*padding: 5px;*/
     font-size: 10px;
 }
 
 .email_div {
-    color: rgba(230,230,230,1);
+    color: #888; /*rgba(210,210,210,1);*/
     display: inline;
-    padding:5px;
+    /*padding:5px;*/
 }
 
 .mine {
-    background-color: #7abacc;
+    background-color: #bcdce5;/* #7abacc;*/
 }
 
 .hide {
