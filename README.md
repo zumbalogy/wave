@@ -1,3 +1,5 @@
+http://ejohn.org/projects/javascript-diff-algorithm/
+
 models
     users
         email
